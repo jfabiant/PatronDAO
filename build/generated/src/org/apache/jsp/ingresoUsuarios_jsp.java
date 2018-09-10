@@ -3,12 +3,8 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import clases.Usuario;
-import java.util.Iterator;
-import java.util.List;
-import clases.UsuarioDatos;
 
-public final class listaUsuarios_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class ingresoUsuarios_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -46,9 +42,16 @@ public final class listaUsuarios_jsp extends org.apache.jasper.runtime.HttpJspBa
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
       out.write("\n");
-      out.write("\n");
-      out.write("\n");
-      out.write("\n");
+      out.write("<!DOCTYPE html>\n");
+      clases.Usuario usr = null;
+      synchronized (_jspx_page_context) {
+        usr = (clases.Usuario) _jspx_page_context.getAttribute("usr", PageContext.PAGE_SCOPE);
+        if (usr == null){
+          usr = new clases.Usuario();
+          _jspx_page_context.setAttribute("usr", usr, PageContext.PAGE_SCOPE);
+        }
+      }
+      out.write('\n');
       clases.UsuarioDatos ud = null;
       synchronized (request) {
         ud = (clases.UsuarioDatos) _jspx_page_context.getAttribute("ud", PageContext.REQUEST_SCOPE);
@@ -58,28 +61,45 @@ public final class listaUsuarios_jsp extends org.apache.jasper.runtime.HttpJspBa
         }
       }
       out.write('\n');
-
-    List l = ud.recuperarUsuario();
-    Iterator i = l.iterator();
-    
-    Usuario usr;
-    
-    while (i.hasNext()){
-        usr = (Usuario)i.next();
-        out.println("Nombres: "+usr.getNombres()+" - <span style='color:red;'>"+usr.getEmail()+"</span><br>");
-        
-    }
-
+      org.apache.jasper.runtime.JspRuntimeLibrary.introspect(_jspx_page_context.findAttribute("usr"), request);
+      out.write('\n');
+      org.apache.jasper.runtime.JspRuntimeLibrary.introspect(_jspx_page_context.findAttribute("usr"), request);
       out.write("\n");
-      out.write("<!DOCTYPE html>\n");
+      out.write("\n");
       out.write("<html>\n");
       out.write("    <head>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
       out.write("        <title>Semana 5</title>\n");
       out.write("    </head>\n");
       out.write("    <body>\n");
+      out.write("        ");
+
+            String nombres, email;
+            nombres = request.getParameter("nombres");
+            email = request.getParameter("email");
+            
+            if(nombres == null && email == null){
+            
+        
+      out.write("\n");
+      out.write("        \n");
+      out.write("        <form action=\"ingresoUsuarios.jsp\" method=\"post\">\n");
+      out.write("            <label>Nombres: </label>\n");
+      out.write("            <input name=\"nombres\" type=\"text\" value=\"\"><br>\n");
+      out.write("            <label>Email: </label>\n");
+      out.write("            <input name=\"email\" type=\"email\" value=\"\"><br>\n");
+      out.write("            \n");
+      out.write("            <input type=\"submit\" value=\"Registrar\">\n");
+      out.write("        </form>\n");
+      out.write("        ");
+ } else {
+            ud.registrarUsuario(usr);
+         }
+        
+      out.write("\n");
       out.write("    </body>\n");
-      out.write("</html>");
+      out.write("</html>\n");
+      out.write("\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;
