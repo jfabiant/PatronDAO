@@ -4,3 +4,5 @@ En esta sesión las competencias a lograr: Analiza y conoce el patrón DAO para 
 2. Darle los permisos necesarios a este usuario.
 3. Crear la tabla "Usuarios".
 4. Insertar en los campos nombres y email.
+5. Visualizar en los archivos jsp si se puede listar e insertar.
+!listo!
